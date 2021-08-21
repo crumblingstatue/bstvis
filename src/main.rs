@@ -107,8 +107,9 @@ fn main() {
     let font = Font::from_file("DejaVuSans.ttf").unwrap();
     let mut tree = BinarySearchTree::default();
     let mut rng = thread_rng();
-    for _ in 0..100 {
-        tree.insert(rng.gen_range(0..1000));
+    tree.insert(5000);
+    for _ in 0..500 {
+        tree.insert(rng.gen_range(0..10000));
     }
     let vis = build_vis(&tree);
     let Vector2 { x: ww, y: wh } = wnd.size();
@@ -151,7 +152,7 @@ fn main() {
 
 fn draw_vis<T: Display>(wnd: &mut RenderWindow, font: &Font, vis: &Vis<T>) {
     let node_radius = 32;
-    let mut text = Text::new("", font, node_radius - 8);
+    let mut text = Text::new("", font, node_radius - 14);
     let node_radius = node_radius as f32;
     let node_size = node_radius * 2.0;
     let node_v_offset = node_size * 1.5;
