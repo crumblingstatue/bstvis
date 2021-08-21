@@ -53,6 +53,9 @@ impl<T> BinarySearchTree<T> {
             Some(ref root) => node_height(root),
         }
     }
+    pub fn root(&self) -> Option<&T> {
+        self.root.as_ref().map(|node| &node.key)
+    }
 }
 
 fn node_height<T>(node: &Node<T>) -> usize {
