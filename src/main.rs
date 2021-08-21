@@ -161,7 +161,7 @@ fn main() {
         rs.set_shader(Some(&bg_shader));
         wnd.draw_rectangle_shape(&shape, &rs);
         wnd.set_view(&view);
-        draw_vis(&mut wnd, &font, tree.root().unwrap(), &vis);
+        draw_vis(&mut wnd, &font, tree.root_key().unwrap(), &vis);
         wnd.display();
     }
 }
