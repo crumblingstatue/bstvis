@@ -99,9 +99,10 @@ fn main() {
     let mut wnd = RenderWindow::new(
         VideoMode::desktop_mode(),
         "BST Visualization",
-        Style::default(),
+        Style::NONE,
         &ctx_settings,
     );
+    wnd.set_position((0, 0).into());
     wnd.set_vertical_sync_enabled(true);
     // Use whatever font you wanna use
     let font = Font::from_file("DejaVuSans.ttf").unwrap();
