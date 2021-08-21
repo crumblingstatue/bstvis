@@ -46,6 +46,27 @@ impl<T: Ord> BinarySearchTree<T> {
     }
 }
 
+impl<T> BinarySearchTree<T> {
+    pub fn depth(&self) -> usize {
+        match self.root {
+            None => 0,
+            Some(ref root) => node_height(root),
+        }
+    }
+}
+
+fn node_height<T>(node: &Node<T>) -> usize {
+    let mut left_height = 0;
+    let mut right_height = 0;
+    if let Some(left) = &node.left {
+        left_height = node_height(left);
+    }
+    if let Some(right) = &node.right {
+        right_height = node_height(right);
+    }
+    std::cmp::max(left_height, right_height) + 1
+}
+
 impl<T> Node<T> {
     fn new(key: T) -> Self {
         Self {
