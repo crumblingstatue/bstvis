@@ -55,19 +55,3 @@ impl<T> Node<T> {
         }
     }
 }
-
-impl<T: Ord> Node<T> {
-    pub fn insert(&mut self, key: T) -> bool {
-        match key.cmp(&self.key) {
-            Ordering::Equal => false,
-            Ordering::Less => {
-                self.left = Some(Box::new(Self::new(key)));
-                true
-            }
-            Ordering::Greater => {
-                self.right = Some(Box::new(Self::new(key)));
-                true
-            }
-        }
-    }
-}
