@@ -5,7 +5,7 @@ use rand::{thread_rng, Rng};
 use sfml::{
     graphics::{
         CircleShape, Color, Font, PrimitiveType, Rect, RectangleShape, RenderStates, RenderTarget,
-        RenderWindow, Shader, Shape, Text, Transformable, Vertex, View,
+        RenderWindow, Shader, ShaderType, Shape, Text, Transformable, Vertex, View,
     },
     system::Vector2,
     window::{ContextSettings, Event, Key, Style, VideoMode},
@@ -102,8 +102,10 @@ fn build_vis_visit_node<'a, T>(
 }
 
 fn main() {
-    let mut ctx_settings = ContextSettings::default();
-    ctx_settings.set_antialiasing_level(8);
+    let ctx_settings = ContextSettings {
+        antialiasing_level: 8,
+        ..Default::default()
+    };
     let mut wnd = RenderWindow::new(
         VideoMode::desktop_mode(),
         "BST Visualization",
@@ -119,7 +121,7 @@ fn main() {
     loop {
         tree.insert(50);
         for _ in 0..50 {
-            tree.insert(rng.gen_range(0..100));
+            tree.insert(rng.gen_range(0i32..100));
         }
         if tree.depth() > 7 {
             tree = BinarySearchTree::default();
@@ -130,8 +132,8 @@ fn main() {
     let vis = build_vis(&tree);
     let Vector2 { x: ww, y: wh } = wnd.size();
     let mut view = View::new((0., 0.).into(), (ww as f32, wh as f32).into());
-
-    let mut bg_shader = Shader::from_memory(None, None, Some(include_str!("frag.glsl"))).unwrap();
+    let mut bg_shader =
+        Shader::from_memory(include_str!("frag.glsl"), ShaderType::Fragment).unwrap();
     bg_shader.set_uniform_vec2("res", (ww as f32, wh as f32).into());
 
     while wnd.is_open() {
@@ -141,16 +143,16 @@ fn main() {
             }
         }
         let speed = 10.;
-        if Key::LEFT.is_pressed() {
+        if Key::Left.is_pressed() {
             view.move_((-speed, 0.));
         }
-        if Key::RIGHT.is_pressed() {
+        if Key::Right.is_pressed() {
             view.move_((speed, 0.));
         }
-        if Key::UP.is_pressed() {
+        if Key::Up.is_pressed() {
             view.move_((0., -speed));
         }
-        if Key::DOWN.is_pressed() {
+        if Key::Down.is_pressed() {
             view.move_((0., speed));
         }
         let def_view = wnd.default_view().to_owned();
