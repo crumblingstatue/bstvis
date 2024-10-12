@@ -111,7 +111,8 @@ fn main() {
         "BST Visualization",
         Style::NONE,
         &ctx_settings,
-    );
+    )
+    .unwrap();
     wnd.set_position((0, 0).into());
     wnd.set_vertical_sync_enabled(true);
     let font = Font::from_file("DejaVuSans.ttf").unwrap();
@@ -134,7 +135,9 @@ fn main() {
     let mut view = View::new((0., 0.).into(), (ww as f32, wh as f32).into());
     let mut bg_shader =
         Shader::from_memory(include_str!("frag.glsl"), ShaderType::Fragment).unwrap();
-    bg_shader.set_uniform_vec2("res", (ww as f32, wh as f32).into());
+    bg_shader
+        .set_uniform_vec2("res", (ww as f32, wh as f32).into())
+        .unwrap();
 
     while wnd.is_open() {
         while let Some(ev) = wnd.poll_event() {
@@ -157,7 +160,9 @@ fn main() {
         }
         let def_view = wnd.default_view().to_owned();
         wnd.set_view(&def_view);
-        bg_shader.set_uniform_vec2("view_cen", view.center());
+        bg_shader
+            .set_uniform_vec2("view_cen", view.center())
+            .unwrap();
         let mut rs = RenderStates::default();
         let shape = RectangleShape::from_rect(Rect::new(0., 0., ww as f32, wh as f32));
         rs.set_shader(Some(&bg_shader));
